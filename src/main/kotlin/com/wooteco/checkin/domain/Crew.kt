@@ -13,4 +13,8 @@ class Crew(
     private var nickname: String,
 ) {
     constructor(nickname: String) : this(null, nickname)
+
+    fun getNickname(): String {
+        return nickname
+    }
 }

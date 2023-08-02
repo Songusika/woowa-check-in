@@ -6,10 +6,15 @@ import com.wooteco.checkin.domain.CrewRepository
 import com.wooteco.checkin.exception.AttendanceException
 import com.wooteco.checkin.exception.CrewException
 import com.wooteco.checkin.service.dto.AttendanceRequest
+import com.wooteco.checkin.service.dto.AttendanceResponse
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
+@Transactional
 class AttendanceService(
     private val crewRepository: CrewRepository,
     private val attendanceRepository: AttendanceRepository,
@@ -38,4 +43,9 @@ class AttendanceService(
     private fun getCrew(attendanceRequest: AttendanceRequest) =
             crewRepository.findByNickname(attendanceRequest.nickname)
                     ?: throw CrewException.NotFoundException()
+
+    fun getAttendance(date: LocalDate): List<AttendanceResponse> {
+        val attendances = attendanceRepository.findAllByDate(date)
+        return attendances.map { AttendanceResponse.from(it) }
+    }
 }

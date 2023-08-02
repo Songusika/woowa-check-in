@@ -14,6 +14,8 @@ class Attendance(
     private var crew: Crew,
     @Column(nullable = false)
     private var date: LocalDate,
+    @Enumerated(value = EnumType.STRING)
+    private var status: AttendanceStatus,
     @Column(nullable = false)
     private var checkInTime: LocalDateTime,
     private var checkOutTime: LocalDateTime?,
@@ -22,9 +24,14 @@ class Attendance(
         null,
         crew,
         LocalDate.now(),
+        AttendanceStatus.from(LocalDateTime.now()),
         LocalDateTime.now(),
         null,
     )
+
+    fun checkOut(time: LocalDateTime) {
+        checkOutTime = time
+    }
 
     fun getDate(): LocalDate {
         return date
@@ -34,7 +41,19 @@ class Attendance(
         return id
     }
 
-    fun checkOut(time: LocalDateTime) {
-        checkOutTime = time
+    fun getNickname(): String {
+        return crew.getNickname()
+    }
+
+    fun getStatus(): String {
+        return status.status
+    }
+
+    fun getCheckInTime(): LocalDateTime {
+        return checkInTime
+    }
+
+    fun getCheckOutTime(): LocalDateTime? {
+        return checkOutTime
     }
 }
