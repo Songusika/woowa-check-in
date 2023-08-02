@@ -7,6 +7,7 @@ import com.wooteco.checkin.exception.AttendanceException
 import com.wooteco.checkin.exception.CrewException
 import com.wooteco.checkin.service.dto.AttendanceRequest
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class AttendanceService(
@@ -15,8 +16,7 @@ class AttendanceService(
 ) {
 
     fun checkIn(attendanceRequest: AttendanceRequest): Long {
-        val crew = crewRepository.findByNickname(attendanceRequest.nickname)
-            ?: throw CrewException.NotFoundException()
+        val crew = getCrew(attendanceRequest)
         val attendance = Attendance(crew)
 
         if (attendanceRepository.existsByCrewAndDate(crew, attendance.getDate())) {
@@ -26,4 +26,16 @@ class AttendanceService(
         attendanceRepository.save(attendance)
         return attendance.getId()!!
     }
+
+    fun checkOut(attendanceRequest: AttendanceRequest) {
+        val crew = getCrew(attendanceRequest)
+        val now = LocalDateTime.now()
+        val attendance =  attendanceRepository.findByCrewAndDate(crew, now.toLocalDate())
+                ?: throw AttendanceException.NotCheckInException()
+        attendance.checkOut(now)
+    }
+
+    private fun getCrew(attendanceRequest: AttendanceRequest) =
+            crewRepository.findByNickname(attendanceRequest.nickname)
+                    ?: throw CrewException.NotFoundException()
 }

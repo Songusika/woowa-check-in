@@ -18,4 +18,10 @@ class AttendanceController(private val attendanceService: AttendanceService) {
         attendanceService.checkIn(attendanceRequest)
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
+
+    @PostMapping("/check-out")
+    fun checkOugt(@RequestBody attendanceRequest: AttendanceRequest): ResponseEntity<Void> {
+        attendanceService.checkOut(attendanceRequest)
+        return ResponseEntity.status(HttpStatus.CREATED).build()
+    }
 }

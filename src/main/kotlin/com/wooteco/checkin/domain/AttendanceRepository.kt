@@ -5,4 +5,6 @@ import java.time.LocalDate
 
 interface AttendanceRepository : JpaRepository<Attendance, Long> {
     fun existsByCrewAndDate(crew: Crew, date: LocalDate): Boolean
+
+    fun findByCrewAndDate(crew: Crew, now: LocalDate): Attendance?
 }

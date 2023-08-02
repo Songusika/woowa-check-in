@@ -28,7 +28,7 @@ class AttendanceServiceTest {
 
     @Test
     fun `출석시 크루가 존재하지 않으면 예외를 발생한다`() {
-        assertThatThrownBy() { attendanceService.checkIn(AttendanceRequest("블랙캣")) }.isInstanceOf(
+        assertThatThrownBy { attendanceService.checkIn(AttendanceRequest("블랙캣")) }.isInstanceOf(
             CrewException.NotFoundException::class.java,
         )
     }
@@ -57,7 +57,7 @@ class AttendanceServiceTest {
         attendanceService.checkIn(AttendanceRequest(nickName))
 
         // expect
-        assertThatThrownBy() { attendanceService.checkIn(AttendanceRequest(nickName)) }.isInstanceOf(
+        assertThatThrownBy { attendanceService.checkIn(AttendanceRequest(nickName)) }.isInstanceOf(
             AttendanceException.AlreadyCheckInException::class.java,
         )
     }

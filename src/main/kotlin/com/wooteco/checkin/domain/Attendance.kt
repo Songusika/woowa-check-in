@@ -33,4 +33,8 @@ class Attendance(
     fun getId(): Long? {
         return id
     }
+
+    fun checkOut(time: LocalDateTime) {
+        checkOutTime = time
+    }
 }
