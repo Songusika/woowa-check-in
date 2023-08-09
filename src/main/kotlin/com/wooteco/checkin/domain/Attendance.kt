@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 class Attendance(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: Long? = null,
+    private var id: Long = 0L,
     @ManyToOne
     @JoinColumn(name = "crew_id")
     private var crew: Crew,
@@ -21,7 +21,7 @@ class Attendance(
     private var checkOutTime: LocalDateTime?,
 ) {
     constructor(crew: Crew) : this(
-        null,
+        0L,
         crew,
         LocalDate.now(),
         AttendanceStatus.from(LocalDateTime.now()),

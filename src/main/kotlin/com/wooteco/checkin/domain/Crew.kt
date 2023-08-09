@@ -9,10 +9,10 @@ import jakarta.persistence.Id
 class Crew(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: Long? = null,
+    private var id: Long = 0L,
     private var nickname: String,
 ) {
-    constructor(nickname: String) : this(null, nickname)
+    constructor(nickname: String) : this(0L, nickname)
 
     fun getNickname(): String {
         return nickname
