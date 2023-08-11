@@ -3,8 +3,10 @@ package com.wooteco.checkin.domain
 import java.time.LocalDateTime
 
 enum class AttendanceStatus(val status: String) {
+    UNREGISTERED("미등록"),
     ATTENDANCE("출석"),
     LATE("지각"),
+    ABSENT("결석"),
     ;
 
     companion object {
